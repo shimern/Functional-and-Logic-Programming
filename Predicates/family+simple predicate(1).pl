@@ -73,5 +73,19 @@ b_s(X,Y):-sister(X,Y). % b_s(?X,+Y) проверка на брат-сестра или сестры
 b_s(X):- b_s(Y,X), write(Y), nl, fail.
 
 
+%Task 2. Create predicates father and wife
+
+%father(?X,+Y) - проверка, является ли X отцом Y
+father(X,Y):- parent(X,Y), man(X).
+
+%father(+X) - вывести отца X
+father(X):- father(Y,X), write(Y).
+
+%wife(?X,+Y) - проверка является ли X женой Y
+wife(X,Y):- parent(X,C), parent(Y,C), woman(X),not(X==Y).
+
+%wife(+X) - вывести жену X
+wife(X):- wife(Y,X), write(Y).
+
 
 
