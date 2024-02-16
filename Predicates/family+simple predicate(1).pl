@@ -88,4 +88,23 @@ wife(X,Y):- parent(X,C), parent(Y,C), woman(X),not(X==Y).
 wife(X):- wife(Y,X), write(Y).
 
 
+% Task 3.
+%Create predicates grand_da, grand_dats, grand_pa_and_da, aunt, aunts.
 
+%grand_da(?X,+Y) определяет является ли X внучкой Y
+grand_da(X,Y):- parent(Y,Z),parent(Z,X),woman(X).
+
+%grand_dats(+X) выводит всех внучек X
+grand_dats(X):- grand_da(Y,X), write(Y),nl, fail.
+
+
+%grand_pa_and_da(+X,+Y) проверяет  являются ли X и Y
+%дедушкой и внучкой или наоборот.
+grand_pa_and_da(X,Y):- grand_da(X,Y).
+grand_pa_and_da(X,Y):- grand_da(Y,X).
+
+%aunt(?X,+Y) - проверяет является ли X тетей Y
+aunt(X,Y):-parent(Z,Y), sister(X,Z). %сестра родителей
+
+%aunts(+X) - выводит всех тетей X
+aunts(X):-aunt(Y,X), write(Y), nl, fail.
