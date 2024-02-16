@@ -53,20 +53,25 @@ men:- man(X),write(X), nl,fail.
 women:- woman(X), write(X), nl, fail.
 children(X):-parent(X,Y), write(Y), nl, fail.
 
+%mother(+X,+Y) - проверка является ли X мамой Y
 mother(X,Y):- parent(X,Y), woman(X).
+%mother(+X) - выводит маму X
 mother(X):- parent(Y,X), woman(Y),write(Y).
 
-%Проверка является ли X братом Y, причем X!=Y
-brother(X,Y):- parent(P,X), parent(P,Y), man(X), not(X==Y).
+%brother(?X,+Y) - Проверка является ли X братом Y, причем X!=Y
+brother(X,Y):- parent(P,X), parent(P,Y), man(X),man(P), not(X==Y).
+%brothers(+X) - Вывод всех братьев.Проверяем по одному родителю, чтоб не было повторов.
+brothers(X):-  brother(Y,X), man(Y), write(Y), nl, fail.
 
-%Вывод всех братьев.Проверяем по одному родителю, чтоб не было повторов.
-brothers(X):- parent(P,X),parent(P,Y), man(Y),man(P), write(Y), nl, fail.
+%sister(?X,+Y) - Проверка является ли X сестрой Y.
+sister(X,Y):- parent(P,X), parent(P,Y), woman(X),man(P), not(X==Y).
 
-%Проверка является ли X сестрой Y
-sister(X,Y):- parent(P,X), parent(P,Y), woman(X), not(X==Y).
+b_s(X,Y):-brother(X,Y). %b_s(?X,+Y) проверка на брат-сестра или братья
+b_s(X,Y):-sister(X,Y). % b_s(?X,+Y) проверка на брат-сестра или сестры
 
-b_s(X,Y):-brother(X,Y). % X,Y брат-сестра или братья
-b_s(X,Y):-sister(X,Y). % X,Y брат-сестра или сестры
+%b_s(+X)вывод всех братьев, сестер.
+b_s(X):- b_s(Y,X), write(Y), nl, fail.
 
-%вывод всех братьев, сестер.
-b_s(X):- parent(P,X),parent(P,Y), not(X==Y),man(P), write(Y), nl, fail.
+
+
+
