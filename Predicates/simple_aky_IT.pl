@@ -5,18 +5,18 @@ high(c_plu_plus,1).
 high(f_sharp,1).
 high(prolog,1).
 high(c,1).
-high(asm,0).
 high(java,1).
 high(r,1).
 high(php,1).
+high(asm,0).
 
 
+decl(f_sharp,1).
+decl(prolog,1).
 decl(ruby,0).
 decl(c_sharp,0).
 decl(python,0).
 decl(c_plu_plus,0).
-decl(f_sharp,1).
-decl(prolog,1).
 decl(c,0).
 decl(asm,0).
 decl(java,0).
@@ -29,27 +29,27 @@ interpret(ruby,1).
 interpret(python,1).
 interpret(f_sharp,1).
 interpret(prolog,1).
+interpret(r,1).
+interpret(php,1).
 interpret(c_sharp,0).
 interpret(c_plu_plus,0).
 interpret(c,0).
 interpret(asm,0).
 interpret(java,0).
-interpret(r,1).
-interpret(php,1).
 
 
 
 oop(ruby,3).
 oop(c_sharp,3).
+oop(java,3).
+oop(php,2).
 oop(python,2).
 oop(c_plu_plus,2).
 oop(f_sharp,1).
 oop(prolog,1).
+oop(r,1).
 oop(c,0).
 oop(asm,0).
-oop(java,3).
-oop(r,1).
-oop(php,2).
 
 
 
@@ -59,11 +59,11 @@ cross(c_plu_plus,1).
 cross(prolog,1).
 cross(c,1).
 cross(asm,1).
+cross(java,1).
+cross(php,1).
+cross(r,0).
 cross(c_sharp,0).
 cross(f_sharp,0).
-cross(java,1).
-cross(r,0).
-cross(php,1).
 
 
 
@@ -72,15 +72,15 @@ visual(ruby,2).
 visual(python,2).
 visual(c_plu_plus,2).
 visual(f_sharp,2).
-visual(prolog,1).
-visual(c,0).
-visual(asm,0).
 visual(java,2).
 visual(r,2).
 visual(php,2).
+visual(prolog,1).
+visual(c,0).
+visual(asm,0).
 
 
-
+mobile(java,1).
 mobile(c_sharp,0).
 mobile(ruby,0).
 mobile(python,0).
@@ -89,7 +89,6 @@ mobile(f_sharp,0).
 mobile(prolog,0).
 mobile(c,0).
 mobile(asm,0).
-mobile(java,1).
 mobile(r,0).
 mobile(php,0).
 
