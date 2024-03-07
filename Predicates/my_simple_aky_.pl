@@ -113,42 +113,62 @@ human(qymaen_jai_sheelal/general_grievous, 0).
 human(r2-d2, 0).
 
 
+%question1(-X1)
 question1(X1):-	write("Каким джедаем был?"),nl,
 				write("2. Джедаем-консулом"),nl,
                                 write("1. Джедаем-защитником"),nl,
 				write("0. Не был джедаем"),nl,
 				read(X1).
-
+%question2(-X2)
 question2(X2):-	write("Чувствителен к Силе?"),nl,
 				write("1. Да"),nl,
 				write("0. Нет"),nl,
 				read(X2).
-
+%question3(-X3)
 question3(X3):-	write("Был на темной стороне?"),nl,
 				write("2. Посмертно верен темной стороне"),nl,
                                 write("1. Был некоторое время, но ушел"),nl,
 				write("0. Посмертно верен светлой стороне"),nl,
 				read(X3).
-
+%question4(-X4)
 question4(X4):-	write("Пережил прикал 66?"),nl,
 				write("3. Родился после приказа"),nl,
 				write("2. Да"),nl,
 				write("1. Умер во время приказа"),nl,
 				write("0. Умер до приказа"),nl,
 				read(X4).
-
+%question5(-X5)
 question5(X5):-	write("Раса-человек?"),nl,
 				write("2. Точно человек"),nl,
                                 write("1. Человекоподобный"),nl,
 				write("0. Точно не человек"),nl,
 				read(X5).
 
+% check_result(+Result) - предикат определяет длину листа всех
+% подходящих элементов на текущем вопросе
+check_result(Result):-length(Result, Count), (Count =:= 1 -> [Answer | _] = Result, write(Answer), fail; true).
 
-start:-	question1(X1),question2(X2),question3(X3),question4(X4),
-		question5(X5),
-		jedi(X,X1),force(X,X2),dark(X,X3),order66(X,X4),
-		human(X,X5),
-		write(X).
+
+start:-
+    question1(X1),
+    findall(Y, (jedi(Y, X1)), Result1),
+    check_result(Result1),
+
+    question2(X2),
+    findall(Y, (jedi(Y, X1),force(Y,X2)), Result2),
+    check_result(Result2),
+
+    question3(X3),
+    findall(Y, (jedi(Y, X1),force(Y,X2),dark(Y,X3)), Result3),
+    check_result(Result3),
+
+    question4(X4),
+    findall(Y, (jedi(Y, X1),force(Y,X2),dark(Y,X3),order66(Y,X4)), Result4),
+    check_result(Result4),
+
+    question5(X5),
+    findall(Y, (jedi(Y, X1),force(Y,X2),dark(Y,X3),order66(Y,X4),human(Y,X5)), Result5),
+    check_result(Result5).
 
 
 
