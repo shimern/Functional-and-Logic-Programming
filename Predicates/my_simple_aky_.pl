@@ -17,7 +17,9 @@ jedi(leia_organa, 0).
 jedi(qymaen_jai_sheelal/general_grievous, 0).
 jedi(finn, 0).
 jedi(han_solo, 0).
+jedi(lando_calrissian,0).
 jedi(r2-d2, 0).
+jedi(c3p0,0).
 jedi(padme_amidala, 0).
 
 
@@ -40,7 +42,9 @@ force(leia_organa, 1).
 force(qymaen_jai_sheelal/general_grievous, 0).
 force(finn, 0).
 force(han_solo, 0).
+force(lando_calrissian,0).
 force(r2-d2, 0).
+force(c3p0,0).
 force(padme_amidala, 0).
 
 
@@ -63,7 +67,9 @@ dark(ahsoka_tano, 0).
 dark(mace_windu, 0).
 dark(leia_organa, 0).
 dark(han_solo, 0).
+dark(lando_calrissian,0).
 dark(r2-d2, 0).
+dark(c3p0,0).
 dark(padme_amidala, 0).
 
 
@@ -80,7 +86,9 @@ order66(yoda, 2).
 order66(sheev_palpatine/darth_sidious, 2).
 order66(darth_maul, 2).
 order66(han_solo, 2).
+order66(lando_calrissian,2).
 order66(r2-d2, 2).
+order66(c3p0,2).
 order66(leia_organa, 2).
 order66(qui-gon_jinn, 0).
 order66(count_dooku/darth_tyranus, 0).
@@ -102,6 +110,7 @@ human(galen_marek/starkiller, 2).
 human(leia_organa, 2).
 human(finn, 2).
 human(han_solo, 2).
+human(lando_calrissian,2).
 human(padme_amidala, 2).
 human(sheev_palpatine/darth_sidious, 2).
 human(darth_naul, 1).
@@ -111,6 +120,13 @@ human(yoda, 0).
 human(mace_windu, 0).
 human(qymaen_jai_sheelal/general_grievous, 0).
 human(r2-d2, 0).
+human(c3p0,0).
+
+space(r2-d2, 1).
+space(c3p0,0).
+
+partner(han_solo, 1).
+partner(lando_calrissian,0).
 
 
 %question1(-X1)
@@ -143,10 +159,24 @@ question5(X5):-	write("Раса-человек?"),nl,
                                 write("1. Человекоподобный"),nl,
 				write("0. Точно не человек"),nl,
 				read(X5).
+%question6(-X6)
+question6(X6):-	write("Участвовал в космических сражениях?"),nl,
+                                write("1. Да"),nl,
+				write("0. Нет"),nl,
+				read(X6).
+
+%question7(-X7)
+question7(X7):-	write("У вашего героя был знаменитый волосатый напарник?"),nl,
+                                write("1. Да"),nl,
+				write("0. Нет"),nl,
+				read(X7).
 
 % check_result(+Result) - предикат определяет длину листа всех
 % подходящих элементов на текущем вопросе
 check_result(Result):-length(Result, Count), (Count =:= 1 -> [Answer | _] = Result, write(Answer), fail; true).
+
+in_list([El|_], El):-!.
+in_list([_|T], El):- in_list(T, El).
 
 
 start:-
@@ -168,12 +198,19 @@ start:-
 
     question5(X5),
     findall(Y, (jedi(Y, X1),force(Y,X2),dark(Y,X3),order66(Y,X4),human(Y,X5)), Result5),
-    check_result(Result5).
+    check_result(Result5),
 
+    %r2-d2 и c3p0 могут не быть распознаны после 5 вопроса -> проверяем конкретно их
+    (in_list(Result5,r2-d2),in_list(Result5, c3p0)->
+             question6(X6),
+             findall(Y, (space(Y,X6)), Result6),
+    check_result(Result6);true),
 
-
-
-
+    %хан соло и лендо калрисиан могут не быть распознаны после 5 вопроса -> проверяем конкретно их
+    (in_list(Result5,han_solo),in_list(Result5, lando_calrissian)->
+             question7(X7),
+             findall(Y, (partner(Y,X7)), Result7),
+    check_result(Result7),true;false ).
 
 
 
